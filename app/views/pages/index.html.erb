@@ -1,0 +1,18 @@
+<h1>Welcome page</h1>
+
+<%= link_to 'Add a link', new_link_path %>
+<hr/>
+
+<% @links.each do |link| %>
+<p><%=link.title %> <%= link_to 'View', link %> 
+<%= link_to 'Up' , votes_path(:vote => {:link_id => link.id, :up => true}), method: :post%> || <%= link_to 'down' , votes_path(:vote => {:link_id => link.id, :up => false}), method: :post%>
+
+Total vote counts : <%=  link.votes.where(:up => true).count -  link.votes.where(:up => false).count%>
+</p>
+
+<%end%>
+
+<div class="digg_pagination">
+   
+    <%= will_paginate @links, :container => false %>
+  </div>
